@@ -1,0 +1,38 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        Schema::create('spj_files', function (Blueprint $table) {
+            $table->id();
+            $table->string('filename');
+            $table->string('type');
+            $table->string('size');
+            $table->string('folder_path');
+            $table->UnsignedBigInteger('spj_id');
+            $table->timestamps();
+
+            $table->foreign('spj_id')->references('id')->on('spjs')->onDelete('cascade');
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::dropIfExists('spj_files');
+    }
+};
