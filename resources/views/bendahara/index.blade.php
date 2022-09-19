@@ -136,10 +136,10 @@
                                         for="maskSample01">Lampiran</label>
                                 <div class="custom-file">
                                     @if($x->proposal_file)
-                                    <a href="" class="chip chip-outline-primary">Lembar Pengajuan</a>
+                                    <a href="{{ route('bendahara.download_proposal', ['id' => $x->id]) }}" class="chip chip-outline-primary">Lembar Pengajuan</a>
                                     @endif
                                     @if($x->lembarVerifikasi)
-                                    <a href="" class="chip chip-outline-primary">Lembar Verifikasi</a>
+                                    <a href="{{ route('bendahara.download_verifikasi', ['id' => $x->id]) }}" class="chip chip-outline-primary">Lembar Verifikasi</a>
                                     @endif
                                     @if($x->suratBayar)
                                     <a href="" class="chip chip-outline-primary">Lembar Surat Bayar</a>

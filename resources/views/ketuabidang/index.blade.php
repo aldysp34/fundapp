@@ -138,6 +138,7 @@
                                         <td class="js-lists-values-earnings small">{{$x->jumlah_diajukan}}</td>
                                         <td class="js-lists-values-earnings small">{{$x->jumlah_approval}}</td>
                                         <td>
+                                            @if($x->status)
                                             @if($x->status == 0)
                                                 <div
                                                 class="chip chip-outline-secondary">Diajukan</a>
@@ -159,6 +160,7 @@
                                             @elseif($x->status == 6)
                                                 <div
                                                 class="chip chip-outline-success">Disetujui</a>
+                                            @endif
                                             @endif
                                         </td>
                                         <td class="text-right pl-0">
@@ -218,6 +220,7 @@
                                         <td class="js-lists-values-earnings small">{{$x->nominal_spj}}</td>
                                         <td class="js-lists-values-earnings small">0</td>
                                         <td>
+                                            @if($x->status)
                                             @if($x->status == 0)
                                                 <div
                                                 class="chip chip-outline-secondary">Diajukan</a>
@@ -239,6 +242,7 @@
                                             @elseif($x->status == 6)
                                                 <div
                                                 class="chip chip-outline-success">Disetujui</a>
+                                            @endif
                                             @endif
                                         </td>
                                         <td class="text-right pl-0">

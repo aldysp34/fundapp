@@ -43,10 +43,11 @@
                     <div class="card mb-lg-32pt">
                         <div>
                             <div class="card-header">
-                                <label class="mr-sm-2 form-label">Buat Pengajuan Termin</label>
+                                <label class="mr-sm-2 form-label">Buat Pengajuan SPJ</label>
                             </div>
                         </div>
-                        <form action="{{route('ketua-bidang.new_proposal')}}" method="post" enctype="multipart/form-data">
+                        <form action="{{ route('ketua-bidang.upload_spj') }}" method="post" enctype="multipart/form-data">
+                            @csrf
                         <div class="card-body d-flex flex-column">
                             <div class="form-group">
                             <label class="form-label">ID Transaksi</label>
@@ -55,6 +56,7 @@
                                 disabled=""
                                 id="transation_id"
                                 placeholder=""
+                                value="{{$variable}}"
                                 name="id_transaksi">
                             </div>
                             <div class="form-group">
@@ -73,36 +75,58 @@
                                 id="bidang"
                                 disabled=""
                                 placeholder=""
-                                value="{{auth()->user()->bidang->name}}">
+                                value="{{auth()->user()->bidang->name}}"
+                                name="bidang">
                             </div>
                             <div class="form-group">
                             <label class="form-label">Deskripsi</label>
                             <input type="text"
                                 class="form-control"
                                 id="description"
-                                disabled=""
                                 placeholder=""
-                                name="deskripsi">
+                                name="deskripsi"
+                                required>
                             </div>
                             <div class="form-group">
                             <label class="form-label"
-                                    for="maskSample01">Jumlah Pengajuan</label>
+                                    for="maskSample01">Nominal SPJ</label>
                             <input id="amount"
                                     type="text"
                                     class="form-control"
-                                    disabled=""
                                     placeholder="Number: 2.342"
                                     data-mask="#.##0"
                                     data-mask-reverse="true"
-                                    name="jumlah_diajukan">
+                                    name="nominal_spj"
+                                    required>
                             </div>
                             <div class="form-group">
-                                <label class="form-label">Upload Berkas Pengajuan</label>
+                            <label class="form-label">Termin</label>
+                            <input type="text"
+                                class="form-control"
+                                id="description"
+                                placeholder=""
+                                name="termin">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Upload Berkas SPJ</label>
                                 <div class="custom-file">
                                     <input type="file"
                                             id="file"
                                             class="custom-file-input"
-                                            name="proposal_file">
+                                            name="spj_file"
+                                            required>
+                                    <label for="file"
+                                            class="custom-file-label">Pilih file</label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Upload Rincian SPJ - Format Excel</label>
+                                <div class="custom-file">
+                                    <input type="file"
+                                            id="file"
+                                            class="custom-file-input"
+                                            name="spj_excel"
+                                            required>
                                     <label for="file"
                                             class="custom-file-label">Pilih file</label>
                                 </div>

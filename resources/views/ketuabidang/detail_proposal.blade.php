@@ -43,22 +43,25 @@
 
                     <div class="card mb-lg-32pt">
                         <div>
+                            @if($proposal)
                             <div class="card-header">
                                 <label class="mr-sm-2 form-label">DETAIL PENGAJUAN TERMIN</label>
-                                @if($proposal->status == 6)
-                                <button type="button" class="btn btn-success btn-rounded disabled">Disetujui</button>
-                                @elseif($proposal->status == 0)
-                                <button type="button" class="btn btn-secondary btn-rounded disabled">Diajukan</button>
-                                @elseif($proposal->status == 1)
-                                <button type="button" class="btn btn-secondary btn-rounded disabled">Proses Verifikasi Verifikator</button>
-                                @elseif($proposal->status == 2)
-                                <button type="button" class="btn btn-secondary btn-rounded disabled">Proses Verifikasi bendahara</button>
-                                @elseif($proposal->status == 3)
-                                <button type="button" class="btn btn-secondary btn-rounded disabled">Proses Verifikasi Ketua Harian</button>
-                                @elseif($proposal->status == 4)
-                                <button type="button" class="btn btn-danger btn-rounded disabled">Ditolak Verifikator</button>
-                                @elseif($proposal->status == 4)
-                                <button type="button" class="btn btn-danger btn-rounded disabled">Ditolak Ketua Harian</button>
+                                @if(!empty($proposal->status))
+                                    @if($proposal->status == 6)
+                                    <button type="button" class="btn btn-success btn-rounded disabled">Disetujui</button>
+                                    @elseif($proposal->status == 0)
+                                    <button type="button" class="btn btn-secondary btn-rounded disabled">Diajukan</button>
+                                    @elseif($proposal->status == 1)
+                                    <button type="button" class="btn btn-secondary btn-rounded disabled">Proses Verifikasi Verifikator</button>
+                                    @elseif($proposal->status == 2)
+                                    <button type="button" class="btn btn-secondary btn-rounded disabled">Proses Verifikasi bendahara</button>
+                                    @elseif($proposal->status == 3)
+                                    <button type="button" class="btn btn-secondary btn-rounded disabled">Proses Verifikasi Ketua Harian</button>
+                                    @elseif($proposal->status == 4)
+                                    <button type="button" class="btn btn-danger btn-rounded disabled">Ditolak Verifikator</button>
+                                    @elseif($proposal->status == 4)
+                                    <button type="button" class="btn btn-danger btn-rounded disabled">Ditolak Ketua Harian</button>
+                                    @endif
                                 @endif
                             </div>
                         </div>
@@ -155,23 +158,24 @@
                                     for="maskSample01">Lampiran</label>
                             <div class="custom-file">
                                 @if($proposal->proposal_file)
-                                <a href="" class="chip chip-outline-primary">Lembar Pengajuan</a>
+                                <a href="{{ route('ketua-bidang.download_proposal', ['id' => $proposal->id]) }}" class="chip chip-outline-primary">Lembar Pengajuan</a>
                                 @endif
                                 @if($proposal->lembarVerifikasi)
-                                <a href="" class="chip chip-outline-primary">Lembar Verifikasi</a>
+                                <a href="{{ route('ketua-bidang.download_verifikasi', ['id' => $proposal->id]) }}" class="chip chip-outline-primary">Lembar Verifikasi</a>
                                 @endif
                                 @if($proposal->suratBayar)
-                                <a href="" class="chip chip-outline-primary">Lembar Surat Bayar</a>
+                                <a href="{{ route('ketua-bidang.download_suratbayar', ['id' => $proposal->id]) }}" class="chip chip-outline-primary">Lembar Surat Bayar</a>
                                 @endif
                                 @if($proposal->approvalKetua)
-                                <a href="" class="chip chip-outline-primary">Lembar Approval Ketua</a>
+                                <a href="{{ route('ketua-bidang.download_approval', ['id' => $proposal->id]) }}" class="chip chip-outline-primary">Lembar Approval Ketua</a>
                                 @endif
                                 @if($proposal->lembarPembayaran)
-                                <a href="" class="chip chip-outline-primary">Lembar Pembayaran</a>
+                                <a href="{{ route('ketua-bidang.download_pembayaran', ['id' => $proposal->id]) }}" class="chip chip-outline-primary">Lembar Pembayaran</a>
                                 @endif
                             </div>
                             </div>
                         </div>
+                        @endif
                         <div class="card-footer p-8pt">
                         </div>
                     </div>

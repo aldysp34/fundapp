@@ -28,10 +28,10 @@ class KetuaHarianController extends Controller
             $file->save();
         }
 
-        $filename = $request->input('id_transaksi').'_'.$request->input('bidang').'_termin '.$request->input('termin').'_'.$request->input('termin').'_approval_ketua.'.$request->file('approval_ketua')->extension();
+        $filename = $file->id_transaksi.'_'.$file->bidang->name.'_termin '.$file->termin.'_approval_ketua.'.$request->file('approval_ketua')->extension();
         $filename = strtolower($filename);
 
-        $filepath = strtolower('files/'.$request->input('bidang').'/approval_ketua');
+        $filepath = strtolower('files/'.$file->bidang->name.'/approval_ketua');
         $type = $request->file('approval_ketua')->getClientMimeType();
         $size = $request->file('approval_ketua')->getSize();
         $path = $request->file('approval_ketua')->move($filepath, $filename);

@@ -59,7 +59,7 @@ class SpjController extends Controller
     }
 
     public function download($id){
-        $proposalFile = ProposalFile::where('proposal_id', $id)->first();
+        $proposalFile = SpjFile::where('spj_id', $id)->first();
         $filepath = public_path().'/'.$proposalFile->folder_path;
 
         if(file_exists($filepath)){

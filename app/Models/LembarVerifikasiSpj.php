@@ -9,6 +9,14 @@ class LembarVerifikasiSpj extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'filename',
+        'type',
+        'size',
+        'spj_id',
+        'folder_path'
+    ];
+
     public function spj(){
         return $this->belongsTo('App\Models\Spj');
     }

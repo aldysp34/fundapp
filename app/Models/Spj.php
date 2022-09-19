@@ -33,4 +33,8 @@ class Spj extends Model
     public function lembarVerifikasi(){
         return $this->hasOne('App\Models\LembarVerifikasiSpj');
     }
+
+    public function bidang(){
+        return $this->belongsTo('App\Models\Bidang');
+    }
 }

@@ -35,7 +35,7 @@ class HomeController extends Controller
 
     public function verifikatorHome(){
         $proposal = Proposal::all();
-        $spj = Proposal::all();
+        $spj = Spj::all();
 
         $proposal_need_approved = array();
         $spj_need_approved = array();

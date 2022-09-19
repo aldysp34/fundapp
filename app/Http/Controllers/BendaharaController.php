@@ -11,18 +11,18 @@ class BendaharaController extends Controller
 {
     
     public function store(Request $request, $id){
-        $filename = $request->input('id_transaksi').'_'.$request->input('bidang').'_termin '.$request->input('termin').'_'.$request->input('termin').'_surat bayar.'.$request->file('surat_bayar')->extension();
+        $file = Proposal::findOrFail($id)->first();
+        $filename = $file->id_transaksi.'_'.$file->bidang->name.'_termin '.$file->termin.'_surat bayar.'.$request->file('surat_bayar')->extension();
         $filename = strtolower($filename);
 
-        $filepath = strtolower('files/'.$request->input('bidang').'/surat bayar');
+        $filepath = strtolower('files/'.$file->bidang->name.'/surat bayar');
         $type = $request->file('surat_bayar')->getClientMimeType();
         $size = $request->file('surat_bayar')->getSize();
         $path = $request->file('surat_bayar')->move($filepath, $filename);
 
-        $changeStatus = Proposal::findOrFail($id);
-        if($changeStatus){
-            $changeStatus->status = 5;
-        }
+        $file->status = 5;
+        $file->save();
+
         $fileCreate = SuratBayar::create([
             'filename' => $filename,
             'type' => $type,
@@ -31,7 +31,7 @@ class BendaharaController extends Controller
             'proposal_id' => $id,
         ]);
 
-        if($changeStatus && $fileCreate){
+        if($file && $fileCreate){
             $msg = 'Berhasil Upload Surat Bayar';
         }else{
             $msg = 'Terjadi Kesalahan';
@@ -59,18 +59,17 @@ class BendaharaController extends Controller
     }
 
     public function lembar_pembayaran(Request $request, $id){
-        $filename = $request->input('id_transaksi').'_'.$request->input('bidang').'_termin '.$request->input('termin').'_'.$request->input('termin').'_lembar pembayaran.'.$request->file('lembar_pembayaran')->extension();
+        // dd($request->all());
+        $file = Proposal::findOrFail($id);
+        $filename = $file->id_transaksi.'_'.$file->bidang->name.'_termin '.$file->termin.'_lembar pembayaran.'.$request->file('lembar_pembayaran')->extension();
         $filename = strtolower($filename);
 
-        $filepath = strtolower('files/'.$request->input('bidang').'/lembar pembayaran');
+        $filepath = strtolower('files/'.$file->bidang->name.'/lembar pembayaran');
         $type = $request->file('lembar_pembayaran')->getClientMimeType();
         $size = $request->file('lembar_pembayaran')->getSize();
         $path = $request->file('lembar_pembayaran')->move($filepath, $filename);
 
-        $changeStatus = Proposal::findOrFail($id);
-        if($changeStatus){
-            $changeStatus->status = 5;
-        }
+        
         $fileCreate = LembarPembayaran::create([
             'nama_penerima' => $request->input('nama_penerima'),
             'npwp_penerima' => $request->input('npwp_penerima'),
