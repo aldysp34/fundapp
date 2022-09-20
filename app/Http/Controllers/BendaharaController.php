@@ -20,7 +20,7 @@ class BendaharaController extends Controller
         $size = $request->file('surat_bayar')->getSize();
         $path = $request->file('surat_bayar')->move($filepath, $filename);
 
-        $file->status = 5;
+        $file->status = 6;
         $file->save();
 
         $fileCreate = SuratBayar::create([
@@ -37,26 +37,22 @@ class BendaharaController extends Controller
             $msg = 'Terjadi Kesalahan';
         }
 
-        return redirect()->back()->with(['msg' => $msg]);
+        return redirect()->route('bendahara.home')->with(['msg' => $msg]);
     }
 
-    public function pembayaran_index(){
-        $proposal = Proposal::all();
+    public function detail_suratbayar($id){
+        $proposal = Proposal::findOrFail($id)->first();
 
-        $proposal_need_pembayaran = array();
-        foreach($proposal as $x){
-            if($x->verifikator_approved == 1 && $x->ketuaharian_approved == 1){
-                if(!$x->lembarPembayaran){
-                    $x->proposal_file;
-                    $x->lembarVerifikasi;
-                    $x->suratBayar;
-                    $x->approvalKetua;
-                    array_push($proposal_need_pembayaran, $x);
-                }
-            }
-        }
-        return view('bendahara.pembayaran', ['role' => 'Bendahara', 'proposal' => $proposal_need_pembayaran]);
+        return view('bendahara.suratbayar', ['role' => 'Bendahara', 'x' => $proposal]);
     }
+
+    public function detail_pembayaran($id){
+        $proposal = Proposal::findOrFail($id)->first();
+
+        return view('bendahara.detail_pembayaran', ['role' => 'Bendahara', 'x' => $proposal]);
+    }
+
+    
 
     public function lembar_pembayaran(Request $request, $id){
         // dd($request->all());
@@ -86,12 +82,12 @@ class BendaharaController extends Controller
             'folder_path' => $path
         ]);
 
-        if($changeStatus && $fileCreate){
-            $msg = 'Berhasil Upload Surat Bayar';
+        if($fileCreate){
+            $msg = 'Berhasil Upload Lembar Pembayaran';
         }else{
             $msg = 'Terjadi Kesalahan';
         }
 
-        return redirect()->back()->with(['msg' => $msg]);
+        return redirect()->route('bendahara.home')->with(['msg' => $msg]);
     }
 }

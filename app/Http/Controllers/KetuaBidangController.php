@@ -50,7 +50,7 @@ class KetuaBidangController extends Controller
         ]);
 
 
-        return redirect()->back()->with(['msg' => 'Berhasil Menambahkan Data']);
+        return redirect()->route('ketua-bidang.home')->with(['msg' => 'Berhasil Menambahkan Data']);
 
 
     }
@@ -118,7 +118,7 @@ class KetuaBidangController extends Controller
             dd($e);
         }
 
-        return redirect()->back()->with(['msg' => 'Berhasil Menambahkan Data']);
+        return redirect()->route('ketua-bidang.home')->with(['msg' => 'Berhasil Menambahkan Data']);
 
     }
     public function new_proposal(){

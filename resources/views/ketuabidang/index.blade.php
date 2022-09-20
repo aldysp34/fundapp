@@ -107,6 +107,7 @@
 
                             <div class="card-header">
                             <label class="mr-sm-2 form-label">Pengajuan Anggaran</label>
+                            <a href="{{route('ketua-bidang.new_proposal')}}" class="btn btn-primary btn-rounded">Buat Pengajuan</a>
                             </div>
 
                             <table class="table mb-0 thead-border-top-0 table-nowrap">
@@ -189,6 +190,7 @@
 
                             <div class="card-header">
                             <label class="mr-sm-2 form-label">Surat Pertanggung Jawaban</label>
+                            <a href="{{route('ketua-bidang.new_spj')}}" class="btn btn-primary btn-rounded">Buat SPJ</a>
                             </div>
 
                             <table class="table mb-0 thead-border-top-0 table-nowrap">
@@ -269,4 +271,16 @@
             let data = {!! $proposal !!}
             console.log(data)
         </script>
+    @endsection
+
+    @section('sidebar-content')
+        <ul class="sidebar-menu">
+                <li class="sidebar-menu-item active">
+                    <a class="sidebar-menu-button"
+                        href="{{route('ketua-bidang.home')}}">
+                        <span class="material-icons sidebar-menu-icon sidebar-menu-icon--left">insert_chart_outlined</span>
+                        <span class="sidebar-menu-text">Dashboard</span>
+                    </a>
+                </li>
+            </ul>
     @endsection

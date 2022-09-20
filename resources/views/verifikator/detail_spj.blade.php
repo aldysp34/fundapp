@@ -116,9 +116,10 @@
                                     <input type="file"
                                             id="file"
                                             class="custom-file-input"
-                                            name="lembar_verifikasi">
+                                            name="verifikasi_spj"
+                                            onchange="clickme()">
                                     <label for="file"
-                                            class="custom-file-label">Pilih file</label>
+                                            class="custom-file-label" id="filename">Pilih file</label>
                                 </div>
                                 </div>
                                 <div class="form-group">
@@ -142,7 +143,81 @@
                         </form>
                     </div>
 
+                    <div class="card mb-lg-32pt">
+                        <div class="table-responsive"
+                                data-toggle="lists"
+                                data-lists-sort-by="js-lists-values-employee-name"
+                                data-lists-values='["js-lists-values-employee-name", "js-lists-values-employer-name", "js-lists-values-projects", "js-lists-values-activity", "js-lists-values-earnings"]'>
+
+                            <div class="card-header">
+                                <label class="mr-sm-2 form-label">Rincian Penggunaan Anggaran</label>
+                            </div>
+
+                            <table class="table mb-0 thead-border-top-0 table-nowrap">
+                                <thead>
+                                    <tr>
+                                        <th style="width: 37px;">Uraian</th>
+                                        <th>Vol</th>
+                                        <th>Sat</th>
+                                        <th>Vol</th>
+                                        <th>Sat</th>
+                                        <th>Vol</th>
+                                        <th>Sat</th>
+                                        <th style="width: 37px;">Harga Satuan</th>
+                                        <th style="width: 37px;">Jumlah</th>
+                                    </tr>
+                                </thead>
+                                
+                                <tbody class="list" id="table_spj">
+                                @if(isset($excelData))
+                                @foreach($excelData as $x)
+                                    <tr>
+                                        <td>
+                                            <div class="d-flex flex-column">
+                                                <p class="mb-0"><strong class="">{{$x->uraian}}</strong></p>
+                                                <small class="js-lists-values-employee-email text-50"></small>
+                                            </div>
+                                        </td>
+                                        <td class="text-center js-lists-values-projects small">{{$x->volume_1}}</td>
+                                        <td class="js-lists-values-earnings small">{{$x->satuan_1}}</td>
+                                        <td class="text-center js-lists-values-projects small">{{$x->volume_2}}</td>
+                                        <td class="js-lists-values-earnings small">{{$x->satuan_2}}</td>
+                                        <td class="text-center js-lists-values-projects small">{{$x->volume_3}}</td>
+                                        <td class="js-lists-values-earnings small">{{$x->satuan_3}}</td>
+                                        <td class="text-center js-lists-values-projects small" data-mask="#.##0"
+                                            data-mask-reverse="true">{{$x->harga_satuan}}</td>
+                                        <td class="text-center js-lists-values-projects small" data-mask="#.##0"
+                                            data-mask-reverse="true">{{$x->jumlah}}</td>
+                                    </tr>
+                                    
+                                    @endforeach
+                                @endif
+                                </tbody>
+                            </table>
+                        </div>
                 </div>
             </div>
 
+    @endsection
+
+    @section('sidebar-content')
+        <ul class="sidebar-menu">
+            <li class="sidebar-menu-item active">
+                <a class="sidebar-menu-button"
+                    href="{{route('verifikator.home')}}">
+                    <span class="material-icons sidebar-menu-icon sidebar-menu-icon--left">insert_chart_outlined</span>
+                    <span class="sidebar-menu-text">Dashboard</span>
+                </a>
+            </li>
+        </ul>
+    @endsection
+    @section('new-script')
+        <script> 
+            const filename = document.getElementById('filename')
+            function clickme(){
+                let data = $('input[type=file]').val()
+                data = data.split("\\");
+                document.getElementById('filename').innerHTML = data[2]
+            }
+        </script>
     @endsection

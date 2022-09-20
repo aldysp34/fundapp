@@ -111,12 +111,13 @@
                                 <label class="form-label">Upload Berkas SPJ</label>
                                 <div class="custom-file">
                                     <input type="file"
-                                            id="file"
                                             class="custom-file-input"
                                             name="spj_file"
-                                            required>
+                                            required
+                                            onchange="clickme()"
+                                            id="file1">
                                     <label for="file"
-                                            class="custom-file-label">Pilih file</label>
+                                            class="custom-file-label" id="filename">Pilih file</label>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -126,9 +127,10 @@
                                             id="file"
                                             class="custom-file-input"
                                             name="spj_excel"
-                                            required>
+                                            required
+                                            onchange="clickme2()">
                                     <label for="file"
-                                            class="custom-file-label">Pilih file</label>
+                                            class="custom-file-label" id="filename2">Pilih file</label>
                                 </div>
                             </div>
                             
@@ -147,4 +149,35 @@
                 </div>
             </div>
         </div>
+    @endsection
+
+    @section('sidebar-content')
+        <ul class="sidebar-menu">
+                <li class="sidebar-menu-item active">
+                    <a class="sidebar-menu-button"
+                        href="{{route('ketua-bidang.home')}}">
+                        <span class="material-icons sidebar-menu-icon sidebar-menu-icon--left">insert_chart_outlined</span>
+                        <span class="sidebar-menu-text">Dashboard</span>
+                    </a>
+                </li>
+            </ul>
+    @endsection
+
+    @section('new-script')
+        <script> 
+            const filename = document.getElementById('filename')
+            function clickme(){
+                let data = $('input[type=file][id=file1]').val()
+                data = data.split("\\");
+                document.getElementById('filename').innerHTML = data[2]
+            }
+
+            const filename2 = document.getElementById('filename2')
+
+            function clickme2(){
+                let data2 = $('input[type=file][id=file]').val()
+                data2 = data2.split("\\")
+                filename2.innerHTML = data2[2]
+            }
+        </script>
     @endsection

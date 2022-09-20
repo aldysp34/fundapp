@@ -18,25 +18,26 @@ class CreateUsersSeeder extends Seeder
         $users = [
             [
                 'name' => 'Ketua Bidang',
-                'email' => 'ketuabidang@peperda.bekasi',
+                'email' => 'ketuabidang@peparda.bekasi',
                 'user_access' => 0,
+                'bidang_id' => 1,
                 'password' => bcrypt('ketuabidang')
             ],
             [
                 'name' => 'Verifikator',
-                'email' => 'verifikator@peperda.bekasi',
+                'email' => 'verifikator@peparda.bekasi',
                 'user_access' => 1,
                 'password' => bcrypt('verifikator')
             ],
             [
                 'name' => 'Bendahara',
-                'email' => 'bendahara@peperda.bekasi',
+                'email' => 'bendahara@peparda.bekasi',
                 'user_access' => 2,
                 'password' => bcrypt('bendahara')
             ],
             [
                 'name' => 'Ketua Harian',
-                'email' => 'ketuaharian@peperda.bekasi',
+                'email' => 'ketuaharian@peparda.bekasi',
                 'user_access' => 3,
                 'password' => bcrypt('ketuaharian')
             ],

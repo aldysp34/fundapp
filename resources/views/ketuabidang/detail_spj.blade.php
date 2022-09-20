@@ -178,3 +178,15 @@
             </div>
         </div>
     @endsection
+
+    @section('sidebar-content')
+        <ul class="sidebar-menu">
+                <li class="sidebar-menu-item active">
+                    <a class="sidebar-menu-button"
+                        href="{{route('ketua-bidang.home')}}">
+                        <span class="material-icons sidebar-menu-icon sidebar-menu-icon--left">insert_chart_outlined</span>
+                        <span class="sidebar-menu-text">Dashboard</span>
+                    </a>
+                </li>
+            </ul>
+    @endsection

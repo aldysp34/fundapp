@@ -15,17 +15,7 @@
                     <div class="flex d-flex flex-column flex-sm-row align-items-center mb-24pt mb-md-0">
 
                         <div class="mb-24pt mb-sm-0 mr-sm-24pt">
-                            <h2 class="mb-0">Dashboard</h2>
-
-                            <ol class="breadcrumb p-0 m-0">
-                                <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-
-                                <li class="breadcrumb-item active">
-                                    Dashboard
-                                </li>
-
-                            </ol>
-
+                            <a href="{{route('ketua-bidang.home')}}"><h2 class="mb-0">Dashboard</h2></a>
                         </div>
                     </div>
                 </div>
@@ -83,7 +73,8 @@
                                 class="form-control"
                                 id="description"
                                 placeholder=""
-                                name="deskripsi">
+                                name="deskripsi"
+                                required>
                             </div>
                             <div class="form-group">
                             <label class="form-label"
@@ -94,7 +85,8 @@
                                     placeholder="Number: 2.342"
                                     data-mask="#.##0"
                                     data-mask-reverse="true"
-                                    name="jumlah_diajukan">
+                                    name="jumlah_diajukan"
+                                    required>
                             </div>
                             <div class="form-group">
                             <label class="form-label">Termin</label>
@@ -102,7 +94,8 @@
                                 class="form-control"
                                 id="description"
                                 placeholder=""
-                                name="termin">
+                                name="termin"
+                                required>
                             </div>
                             <div class="form-group">
                             <div class="form-group">
@@ -111,9 +104,11 @@
                                     <input type="file"
                                             id="file"
                                             class="custom-file-input"
-                                            name="proposal_file">
+                                            name="proposal_file"
+                                            required
+                                            onchange="clickme()">
                                     <label for="file"
-                                            class="custom-file-label">Pilih file</label>
+                                            class="custom-file-label" id="filename">Pilih file</label>
                                 </div>
                             </div>
                             
@@ -132,4 +127,27 @@
                 </div>
             </div>
         </div>
+    @endsection
+
+    @section('sidebar-content')
+        <ul class="sidebar-menu">
+                <li class="sidebar-menu-item active">
+                    <a class="sidebar-menu-button"
+                        href="{{route('ketua-bidang.home')}}">
+                        <span class="material-icons sidebar-menu-icon sidebar-menu-icon--left">insert_chart_outlined</span>
+                        <span class="sidebar-menu-text">Dashboard</span>
+                    </a>
+                </li>
+            </ul>
+    @endsection
+
+    @section('new-script')
+        <script> 
+            const filename = document.getElementById('filename')
+            function clickme(){
+                let data = $('input[type=file]').val()
+                data = data.split("\\");
+                document.getElementById('filename').innerHTML = data[2]
+            }
+        </script>
     @endsection

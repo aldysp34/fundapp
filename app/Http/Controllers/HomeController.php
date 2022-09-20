@@ -54,7 +54,7 @@ class HomeController extends Controller
             }
         }
 
-        return view('verifikator.index', ['role' => 'Verifikator', 'proposal' => $proposal_need_approved, 'spj' => $spj]);
+        return view('verifikator.index', ['role' => 'Verifikator', 'proposal' => $proposal_need_approved, 'spj' => $spj_need_approved]);
     }
 
     public function bendaharaHome(){
@@ -62,6 +62,7 @@ class HomeController extends Controller
         $proposal = Proposal::all();
 
         $proposal_need_suratbayar = array();
+        $proposal_need_pembayaran = array();
         foreach($proposal as $x){
             if($x->verifikator_approved == 1 && $x->ketuaharian_approved == 0){
                 if(!$x->suratBayar){
@@ -69,16 +70,26 @@ class HomeController extends Controller
                     $x->lembarVerifikasi;
                     array_push($proposal_need_suratbayar, $x);
                 }
+            }else if($x->verifikator_approved == 1 && $x->ketuaharian_approved == 1){
+                if(!$x->lembarPembayaran){
+
+                    $x->proposal_file;
+                    $x->lembarVerifikasi;
+                    $x->suratBayar;
+                    $x->approvalKetua;
+                    array_push($proposal_need_pembayaran, $x);
+                }
             }
         }
-
-        return view('bendahara.index', ['role' => 'Bendahara', 'proposal' => $proposal_need_suratbayar]);
+        return view('bendahara.index', ['role' => 'Bendahara', 'proposal' => $proposal_need_suratbayar, 'spj' => $proposal_need_pembayaran]);
     }
 
     public function ketuaharianHome(){
         $proposal = Proposal::all();
+        $spj = Spj::all();
 
         $proposal_need_approved = array();
+        $spj_need_approved = array();
         foreach($proposal as $x){
             if($x->verifikator_approved == 1 && $x->ketuaharian_approved == 0){
                 if($x->suratBayar){
@@ -89,7 +100,17 @@ class HomeController extends Controller
             }
         }
 
-        return view('ketuaharian.index', ['role' => 'Ketua Harian', 'proposal' => $proposal_need_approved]);
+        foreach($spj as $x){
+            if($x->verifikator_approved == 1 && $x->ketuaharian_approved == 0){
+                
+                $x->spj_file;
+                $x->lembarVerifikasi;
+                array_push($spj_need_approved, $x);
+                
+            }
+        }
+
+        return view('ketuaharian.index', ['role' => 'Ketua Harian', 'proposal' => $proposal_need_approved, 'spj' => $spj_need_approved]);
     }
 
     public function adminHome(){

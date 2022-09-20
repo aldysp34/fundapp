@@ -9,7 +9,8 @@ use App\Models\Spj;
 use App\Models\LembarVerifikasiSpj;
 use App\Models\SpjExcel;
 use Maatwebsite\Excel\Facades\Excel;
-
+use App\Models\ExcelData;
+use App\Imports\ExcelDataImport;
 
 
 class VerifikatorController extends Controller
@@ -51,11 +52,19 @@ class VerifikatorController extends Controller
             'folder_path' => $path,
             'proposal_id' => $id,
         ]);
-        return redirect()->back()->with(['msg_approveReject' => $msg]);
+        return redirect()->route('verifikator.home')->with(['msg_approveReject' => $msg]);
+    }
+
+    public function detail_proposal($id){
+        $proposal = Proposal::where('id', $id)->first();
+        $proposal->proposal_file;
+
+        return view('verifikator.detail_proposal', ['role' => 'Verifikator', 'proposal' => $proposal]);
     }
 
     public function approvedRejectedSpj(Request $request, $id){
         $file = Spj::findOrFail($id);
+        $data = $request->input('action');
         if($file){
             $file->verifikator_approved = $data;
             $file->nominal_verifikasi = $request->input('nominal_verifikasi');
@@ -65,7 +74,7 @@ class VerifikatorController extends Controller
 
         if($data == 1){
             $msg = 'Berhasil Approve Proposal';
-            $file->status = 2;
+            $file->status = 3;
             $file->save();
         }else if($data == 2){
             $msg = 'Berhasil Reject Proposal';
@@ -87,7 +96,7 @@ class VerifikatorController extends Controller
             'folder_path' => $path,
             'spj_id' => $id,
         ]);
-        return redirect()->back()->with(['msg_approveReject' => $msg]);
+        return redirect()->route('verifikator.home')->with(['msg_approveReject' => $msg]);
     }
     public function detail_spj($id){
         $spj = Spj::where('id', $id)->first();
@@ -95,16 +104,17 @@ class VerifikatorController extends Controller
 
         $excelFile = SpjExcel::where('spj_id', $id)->first();
         $filepath = public_path().'/'.$excelFile->folder_path;
-        $excelData = file_get_contents($filepath);
+        
+        if(strpos($filepath, '.xls') || strpos($filepath, '.csv')){
+            ExcelData::truncate();
+            $excelData = Excel::import(new ExcelDataImport, $filepath);
+    
+            $excelDataFromDB = ExcelData::all();
+        }
 
-        $csvData = Excel::load($filepath, function($file){
-
-        })->convert('csv');
-
-        $rows = array_map("str_getcsv". explode("\n", $csvData));
-        $header = array_shift($rows);
-        dd($rows);
-
+        if(isset($excelDataFromDB)){
+            return view('verifikator.detail_spj', ['spj' => $spj, 'role' => 'Verifikator', 'excelData' => $excelDataFromDB]);
+        }
         return view('verifikator.detail_spj', ['spj' => $spj, 'role' => 'Verifikator']);
     }
 }
