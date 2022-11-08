@@ -151,7 +151,7 @@
                                 id="verify_information"
                                 placeholder=""
                                 disabled="" 
-                                value="">
+                                value="{{$proposal->lembarPembayaran->keterangan}}">
                             </div>
                             <div class="form-group">
                             <label class="form-label"
@@ -171,6 +171,7 @@
                                 @endif
                                 @if($proposal->lembarPembayaran)
                                 <a href="{{ route('ketua-bidang.download_pembayaran', ['id' => $proposal->id]) }}" class="chip chip-outline-primary">Lembar Pembayaran</a>
+                                <a href="{{ route('ketua-bidang.invoice', ['id' => $proposal->id])}}" class="chip chip-outline-primary">Invoice Pembayaran</a>
                                 @endif
                             </div>
                             </div>

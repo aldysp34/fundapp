@@ -150,6 +150,7 @@ class KetuaBidangController extends Controller
         }else if($role == 4){
             $role = 'Admin';
         }
+        $proposal->lembarPembayaran;
 
         return view('ketuabidang.detail_proposal', ['proposal' => $proposal, 'role' => $role]);
     }

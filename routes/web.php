@@ -14,6 +14,7 @@ use App\Http\Controllers\LembarPembayaranController;
 use App\Http\Controllers\SpjController;
 use App\Http\Controllers\SpjExcelController;
 use App\Http\Controllers\LembarVerifikasiSpjController;
+use App\Http\Controllers\InvoiceController;
 
 
 
@@ -52,6 +53,8 @@ Route::middleware(['auth', 'user-access:0'])->group(function(){
     Route::get('/ketua-bidang/detail_spj/{id}', [KetuaBidangController::class, 'detail_spj'])->name('ketua-bidang.detail_spj');
     Route::get('/ketua-bidang/download_spj/{id}', [SpjController::class, 'download'])->name('ketua-bidang.download_spj');
     Route::get('/ketua-bidang/download_excel/{id}', [SpjExcelController::class, 'download'])->name('ketua-bidang.download_excel');
+
+    Route::get('/ketua-bidang/download_invoice/{id}', [InvoiceController::class, 'generateInvoice'])->name('ketua-bidang.invoice');
 });
 
 Route::middleware(['auth', 'user-access:1'])->group(function(){
